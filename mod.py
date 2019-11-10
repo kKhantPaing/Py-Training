@@ -1,53 +1,49 @@
 from datetime import *
 import pymysql
 def connect():
-    mydb = pymysql.connect("localhost","root","kkp1219980","test")
-    #return mydb.cursor()
-    #print ("Connected")
+    mydb = pymysql.connect("localhost","tester","123","test")
     return mydb
-def insert():
+def insert(*li):
     mydb=connect()
     mycursor=mydb.cursor()
     sql="insert into shiftMasterMaintenace values\
     (%s,%s,'AA',%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-    val=('a', 'b', 'd', '2019/11/11', 'a', 'b', 'c', 'd', 'a', 'b', 'c', 'd')
+    val=(li[0],li[1],li[2],li[3],li[4],li[5],li[6],li[7],li[8],li[9],li[10],li[11])
     mycursor.execute(sql,val)
     mydb.commit()
     print("OK")
+    mycursor.close()
+    
 def select(tb):
-    mycursor=connect()
+    mydb=connect()
+    mycursor=mydb.cursor()
     mycursor.execute("Select * from %s"%tb)
     return mycursor.fetchall()
     mycursor.close()
-def add12H(t):
-    t1=t.split(":")
-    if "PM" in t:
-        t1[0]=str(int(t1[0])+12)
-    return str(t1[0])+":"+str(t1[1][:2])
-def add24H(t):
-    t=t[1:]
-    t=am12(t)
-   # print(t,"AAA")
-    t1=t.split(":")
-    t1[0]=int(t1[0])+24
-    return str(t1[0])+":"+str(t1[1])
-def am12(t):
-    t1=t.split(":")
-    if t1[0]=="12" and "AM" in t1[1]:
-        return str(0)+":"+str(t1[1][:2])
-    else:
-        if "AM" in t1[1] or "PM" in t1[1]:
-            return t[:-2]
-        else:
-            return t
 
-def dif_Time(t1,t2,ss='s1'):#under testing
-    if("+" in t1):t1=add24H(t1)
-    if("+" in t2):t2=add24H(t2)
-    if("PM" in t1):t1=add12H(t1)
-    else: t1=am12(t1)
-    if("PM" in t2):t2=add12H(t2)
-    else: t2=am12(t2)
+def fd(t):
+    amfd={+12:"24",+1:"25",+2:"26",+3:"27",+4:"28",+5:"29",+6:"30",+7:"31",+8:"32",+9:"33",+10:"34",+11:"35"}
+    pmfd={+12:"36",+1:"37",+2:"38",+3:"39",+4:"40",+5:"41",+6:"42",+7:"43",+8:"44",+9:"45",+10:"46",+11:"47"}
+    t1=t[1:].split(":")
+    if "AM" in t1[1]:
+        return str(amfd[int(t1[0])])+":"+str(t1[1][:-2])
+    else:
+        return str(pmfd[int(t1[0])])+":"+str(t1[1][:-2])
+
+def td(t):
+    am={12:"0",1:"1",2:"2",3:"3",4:"4",5:"4",6:"6",7:"7",8:"8",9:"9",10:"10",11:"11"}
+    pm={12:"12",1:"13",2:"14",3:"15",4:"16",5:"17",6:"18",7:"19",8:"20",9:"21",10:"22",11:"23"}
+    t1=t.split(":")
+    if "AM" in t1[1]:
+        return str(am[int(t1[0])])+":"+str(t1[1][:-2])
+    else:
+        return str(pm[int(t1[0])])+":"+str(t1[1][:-2])
+    
+def dif_Time(t11,t22,ss='s1'):#under testing
+    if("+" in t11):t1=fd(t11)
+    else:t1=td(t11)
+    if("+" in t22):t2=fd(t22)
+    else:t2=td(t22)
     #print(t1,t2)
     t1=t1.split(":")
     t2=t2.split(":")
@@ -64,19 +60,21 @@ def dif_Time(t1,t2,ss='s1'):#under testing
         if t2-t1>=28800:
             return ('m',fd)
         else:
-            return ('s2',fd)
-    elif ss=='s2':
-        if t2-t1<7200:
-            return False
-        else:
+            return (t2-t1,fd)
+    elif ss=='m':
+        if (t2-t1) in range(1800,7201):
             return True
-    elif ss=="ss":
-        if t2>t1:
+        else:
+            return False
+    
+    elif ss=="s2":
+        if t2-t1>=7200:
             return True
         else:
             return False        
     else:
-        if 7200<t2-t1<1800:
-            return True
-        else:
+        if t2-t1<ss:
             return False
+        else:
+            return True    
+        
