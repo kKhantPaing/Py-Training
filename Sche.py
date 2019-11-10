@@ -18,16 +18,16 @@ def shiftMasterMaintenace():
     li.append(signOnOff_1_StartTime)
     signOnOff_1_FinishTime=input("6- Finish Time: ")
     li.append(signOnOff_1_FinishTime)
-    ss=mod.dif_Time(signOnOff_1_StartTime,signOnOff_1_FinishTime)
+    ss=mod.dif_Time(signOnOff_1_StartTime,signOnOff_1_FinishTime,'s1')
     if ss[1]=='y':signOnOff_1_FinishTime="+"+signOnOff_1_FinishTime
-    if ss[0]=="s2":
+    if str(ss[0])!="m":
         print("Sign On/Off Time(2)")
         signOnOff_2_StartTime=input("7- Start Time(2) : ")
         li.append(signOnOff_2_StartTime)
         flag=mod.dif_Time(signOnOff_1_FinishTime,signOnOff_2_StartTime,"s2")
         if flag:#NEED MORE TESTING
             signOnOff_2_FinishTime=input("8- Finish Time(2): ")
-            flag1=mod.dif_Time(signOnOff_2_StartTime,signOnOff_2_FinishTime,"ss")
+            flag1=mod.dif_Time(signOnOff_2_StartTime,signOnOff_2_FinishTime,ss[0])
             if flag1:
                 li.append(signOnOff_2_FinishTime)
                 li.append("0")
@@ -53,11 +53,9 @@ def shiftMasterMaintenace():
     li.append(input("9- ActiveInd(y,n): ").lower())
     print("Allowance Detail")
     li.append(input("12- Code Description Type Hrs/Amt  : "))
-    mod.insert(*li)
-    flag=input("Are you sure want to save?(y,n): ")
-    if flag==y:
+    flag=input("Are you sure want to save?(y,n): ").lower()
+    if flag=='y':
         mod.insert(*li)
-        mod.commit()
     else:
         print("Back to new Shift Master Maintenace.")
         mod.rollback()
