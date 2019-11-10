@@ -13,7 +13,7 @@ def shiftMasterMaintenace():
     li.append(input("2- Cost Centre : "))
     li.append(input("3- Sched No : "))
     li.append(input("4- Effect Date : "))
-    print("Sign On/Off Time")
+    print("Sign On/Off Time("HH:MM(AM/PM)")")
     signOnOff_1_StartTime=input("5- Start Time: ")
     li.append(signOnOff_1_StartTime)
     signOnOff_1_FinishTime=input("6- Finish Time: ")
