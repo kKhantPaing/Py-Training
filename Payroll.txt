@@ -1,0 +1,50 @@
+mysql> create table shiftMasterMaintenace(
+    -> payRollType varchar(255),
+    -> costCenter varchar(255),
+    -> schedType varchar(255) default null,
+    -> schedNo varchar(255) primary key not null,
+    -> effectDate Date,
+    -> signOnOffTime1StartTime varchar(255),
+    -> signOnOffTime1FinishTime varchar(255),
+    -> signOnOffTime2StartTime varchar(255),
+    -> signOnOffTime2FinishTime varchar(255),
+    -> mealTimeStartTime varchar(255),
+    -> mealTimeFinishTime varchar(255),
+    -> activeInd varchar(1),
+    -> codeDesType varchar(255));
+Query OK, 0 rows affected (0.41 sec)
+
+mysql> desc shiftMasterMaintenace;
++--------------------------+--------------+------+-----+---------+-------+
+| Field                    | Type         | Null | Key | Default | Extra |
++--------------------------+--------------+------+-----+---------+-------+
+| payRollType              | varchar(255) | YES  |     | NULL    |       |
+| costCenter               | varchar(255) | YES  |     | NULL    |       |
+| schedType                | varchar(255) | YES  |     | NULL    |       |
+| schedNo                  | varchar(255) | NO   | PRI | NULL    |       |
+| effectDate               | date         | YES  |     | NULL    |       |
+| signOnOffTime1StartTime  | varchar(255) | YES  |     | NULL    |       |
+| signOnOffTime1FinishTime | varchar(255) | YES  |     | NULL    |       |
+| signOnOffTime2StartTime  | varchar(255) | YES  |     | NULL    |       |
+| signOnOffTime2FinishTime | varchar(255) | YES  |     | NULL    |       |
+| mealTimeStartTime        | varchar(255) | YES  |     | NULL    |       |
+| mealTimeFinishTime       | varchar(255) | YES  |     | NULL    |       |
+| activeInd                | varchar(1)   | YES  |     | NULL    |       |
+| codeDesType              | varchar(255) | YES  |     | NULL    |       |
++--------------------------+--------------+------+-----+---------+-------+
+13 rows in set (0.14 sec)
+
+mysql> select*from shiftMasterMaintenace;
+Empty set (0.00 sec)
+
+mysql> select*from shiftMasterMaintenace;
+Empty set (0.00 sec)
+
+mysql> select*from shiftMasterMaintenace;
++-------------+------------+-----------+---------+------------+-------------------------+--------------------------+-------------------------+--------------------------+-------------------+--------------------+-----------+-------------+
+| payRollType | costCenter | schedType | schedNo | effectDate | signOnOffTime1StartTime | signOnOffTime1FinishTime | signOnOffTime2StartTime | signOnOffTime2FinishTime | mealTimeStartTime | mealTimeFinishTime | activeInd | codeDesType |
++-------------+------------+-----------+---------+------------+-------------------------+--------------------------+-------------------------+--------------------------+-------------------+--------------------+-----------+-------------+
+| a           | b          | AA        | d       | 2019-11-11 | a                       | b                        | c                       | d                        | a                 | b                  | c         | d           |
++-------------+------------+-----------+---------+------------+-------------------------+--------------------------+-------------------------+--------------------------+-------------------+--------------------+-----------+-------------+
+1 row in set (0.00 sec)
+
