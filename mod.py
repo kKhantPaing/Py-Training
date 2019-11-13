@@ -11,7 +11,7 @@ def insert(*li):
     val=(li[0],li[1],li[2],li[3],li[4],li[5],li[6],li[7],li[8],li[9],li[10],li[11])
     mycursor.execute(sql,val)
     mydb.commit()
-    print("OK")
+    print("Saved!")
     mycursor.close()
     
 def select(tb):
@@ -21,7 +21,7 @@ def select(tb):
     return mycursor.fetchall()
     mycursor.close()
 
-def fd(t):
+def fdy(t):
     amfd={+12:"24",+1:"25",+2:"26",+3:"27",+4:"28",+5:"29",+6:"30",+7:"31",+8:"32",+9:"33",+10:"34",+11:"35"}
     pmfd={+12:"36",+1:"37",+2:"38",+3:"39",+4:"40",+5:"41",+6:"42",+7:"43",+8:"44",+9:"45",+10:"46",+11:"47"}
     t1=t[1:].split(":")
@@ -39,11 +39,11 @@ def td(t):
     else:
         return str(pm[int(t1[0])])+":"+str(t1[1][:-2])
     
-def dif_Time(t11,t22,ss='s1'):#under testing
-    if("+" in t11):t1=fd(t11)
-    else:t1=td(t11)
-    if("+" in t22):t2=fd(t22)
-    else:t2=td(t22)
+def dif_Time(t1,t2,ss='s1'):#under testing
+    if("+" in t1):t1=fdy(t1)
+    else:t1=td(t1)
+    if("+" in t2):t2=fdy(t2)
+    else:t2=td(t2)
     #print(t1,t2)
     t1=t1.split(":")
     t2=t2.split(":")
@@ -63,18 +63,18 @@ def dif_Time(t11,t22,ss='s1'):#under testing
             return (t2-t1,fd)
     elif ss=='m':
         if (t2-t1) in range(1800,7201):
-            return True
+            return (True,fd)
         else:
-            return False
+            return (False,fd)
     
     elif ss=="s2":
         if t2-t1>=7200:
-            return True
+            return (True,fd)
         else:
-            return False        
+            return (False,fd)    
     else:
         if t2-t1<ss:
-            return False
+            return (False,fd)
         else:
-            return True    
-        
+            return (True,fd)
+
