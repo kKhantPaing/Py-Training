@@ -3,17 +3,27 @@ import pymysql
 def connect():
     mydb = pymysql.connect("localhost","tester","123","test")
     return mydb
-def insert(*li):
+def insertschem(*li):
     mydb=connect()
     mycursor=mydb.cursor()
-    sql="insert into shiftMasterMaintenace values\
+    sql="insert into shiftMasterMaintenance values\
     (%s,%s,'AA',%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     val=(li[0],li[1],li[2],li[3],li[4],li[5],li[6],li[7],li[8],li[9],li[10],li[11])
     mycursor.execute(sql,val)
     mydb.commit()
     print("Saved!")
     mycursor.close()
-    
+
+def insertroscm(*li):
+    mydb1=connect()
+    mycursor1=mydb1.cursor()
+    sql1="insert into rosterMaintenance values (%s,%s,%s,%s,%s)"
+    val1=(li[0],li[1],li[2],li[3],li[4])
+    mycursor1.execute(sql1,val1)
+    mydb1.commit()
+    print("Saved!")
+    mycursor1.close()
+
 def select(tb):
     mydb=connect()
     mycursor=mydb.cursor()
