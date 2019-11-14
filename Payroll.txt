@@ -1,4 +1,4 @@
-mysql> create table shiftMasterMaintenace(
+mysql> create table shiftMasterMaintenance(
     -> payRollType varchar(255),
     -> costCenter varchar(255),
     -> schedType varchar(255) default null,
@@ -14,7 +14,7 @@ mysql> create table shiftMasterMaintenace(
     -> codeDesType varchar(255));
 Query OK, 0 rows affected (0.41 sec)
 
-mysql> desc shiftMasterMaintenace;
+mysql> desc shiftMasterMaintenance;
 +--------------------------+--------------+------+-----+---------+-------+
 | Field                    | Type         | Null | Key | Default | Extra |
 +--------------------------+--------------+------+-----+---------+-------+
@@ -32,19 +32,23 @@ mysql> desc shiftMasterMaintenace;
 | activeInd                | varchar(1)   | YES  |     | NULL    |       |
 | codeDesType              | varchar(255) | YES  |     | NULL    |       |
 +--------------------------+--------------+------+-----+---------+-------+
-13 rows in set (0.14 sec)
 
-mysql> select*from shiftMasterMaintenace;
-Empty set (0.00 sec)
+mysql> create table rosterMaintenance(
+    -> payRollType varchar(255),
+    -> costCenter varchar(255),
+    -> rosterCode varchar(255) primary key not null,
+    -> noOfLines int,
+    -> daysInCycle int);
+Query OK, 0 rows affected (0.33 sec)
 
-mysql> select*from shiftMasterMaintenace;
-Empty set (0.00 sec)
-mysql> create user "tester"@"localhost" identified by "123";
-mysql> select*from shiftMasterMaintenace;
-+-------------+------------+-----------+---------+------------+-------------------------+--------------------------+-------------------------+--------------------------+-------------------+--------------------+-----------+-------------+
-| payRollType | costCenter | schedType | schedNo | effectDate | signOnOffTime1StartTime | signOnOffTime1FinishTime | signOnOffTime2StartTime | signOnOffTime2FinishTime | mealTimeStartTime | mealTimeFinishTime | activeInd | codeDesType |
-+-------------+------------+-----------+---------+------------+-------------------------+--------------------------+-------------------------+--------------------------+-------------------+--------------------+-----------+-------------+
-| a           | b          | AA        | d       | 2019-11-11 | a                       | b                        | c                       | d                        | a                 | b                  | c         | d           |
-+-------------+------------+-----------+---------+------------+-------------------------+--------------------------+-------------------------+--------------------------+-------------------+--------------------+-----------+-------------+
-1 row in set (0.00 sec)
-
+mysql> desc rosterMaintenance;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| payRollType | varchar(255) | YES  |     | NULL    |       |
+| costCenter  | varchar(255) | YES  |     | NULL    |       |
+| rosterCode  | varchar(255) | NO   | PRI | NULL    |       |
+| noOfLines   | int(11)      | YES  |     | NULL    |       |
+| daysInCycle | int(11)      | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
