@@ -31,6 +31,16 @@ def select(tb):
     return mycursor.fetchall()
     mycursor.close()
 
+def selectScheNo(*lineNo):
+    mydb=connect()
+    mycursor=mydb.cursor()
+    resSched=[]    
+    for line in lineNo:
+        mycursor.execute("Select * from shiftMasterMaintenance where schedNo=%s"%line)
+        resSched.append(mycursor.fetchall())
+    return resSched
+    mycursor.close()
+
 def fdy(t):
     amfd={+12:"24",+1:"25",+2:"26",+3:"27",+4:"28",+5:"29",+6:"30",+7:"31",+8:"32",+9:"33",+10:"34",+11:"35"}
     pmfd={+12:"36",+1:"37",+2:"38",+3:"39",+4:"40",+5:"41",+6:"42",+7:"43",+8:"44",+9:"45",+10:"46",+11:"47"}
@@ -58,27 +68,27 @@ def dif_Time(t1,t2,ss='s1'):#under testing
     t1=t1.split(":")
     t2=t2.split(":")
     #print(t1,t2,"BBBB")
-    t1=int(t1[0])*3600+int(t1[1])*60
-    t2=int(t2[0])*3600+int(t2[1])*60
+    t1=int(t1[0])*60+int(t1[1])
+    t2=int(t2[0])*60+int(t2[1])
     fd='n'
     if t1>t2:
         x=input("Is the following day?(y,n): ").lower()
         if x=="y":
-            t2+=86400
+            t2+=1440
             fd='y'
     if ss=='s1':
-        if t2-t1>=28800:
+        if t2-t1>=480:
             return ('m',fd)
         else:
             return (t2-t1,fd)
     elif ss=='m':
-        if (t2-t1) in range(1800,7201):
+        if (t2-t1) in range(30,121):
             return (True,fd)
         else:
             return (False,fd)
     
     elif ss=="s2":
-        if t2-t1>=7200:
+        if t2-t1>=120:
             return (True,fd)
         else:
             return (False,fd)    
