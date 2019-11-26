@@ -10,6 +10,9 @@ def dataEntryMenu():
         shiftMasterMaintenance()
     elif p=="2":
         rosterCodeMaintenance()
+    elif p=="3":
+        rosterLineMaintenance()
+        
 def shiftMasterMaintenance():
     li=[input("1- Payroll Type : ")]
     li.append(input("2- Cost Centre : "))
@@ -66,6 +69,8 @@ def shiftMasterMaintenance():
         flag=input("Are you sure want to save?(y,n): ").lower()
         if flag=='y':
             mod.insertschem(*li)
+            print("-"*50)
+            main()
         else:
             print("Back to new Shift Master Maintenace.")
             shiftMasterMaintenance()
@@ -81,17 +86,36 @@ def rosterCodeMaintenance():
         print(type(i),i)
     if flag=='y':
         mod.insertroscm(*li)
+        print("-"*50)
+        main()
     else:
         print("Back to new Roster Code Maintenace.")
         rosterCodeMaintenance()
 
-
+def rosterLineMaintenance():
+    li=[input("1- Payroll Type : ")]
+    li.append(input("2- Cost Centre : "))
+    li.append(input("3- Roster Code : "))
+    rosterLineMain=input("4- Roster Line : ")
+    rosterLineno=int(rosterLineMain)
+    lineNo=[]
+    for line in range(rosterLineno):
+        lineNo.append(input(f'Roster Code {li[2]}, Line No {line+1} : '))
+    lineNo=mod.selectScheNo(*lineNo)
+    print("""Line No\tSched No From Date\tSign On\tSign Off\tSign On\tSign Off\tMeal Start\tMeal Finish\tAllow Code""")
+    for line in lineNo:
+        print(line[0][0]+"\t",line[0][1]+"\t",str(line[0][4])+"\t",line[0][5]+"\t",line[0][6]+"\t",line[0][7]+"\t",line[0][8]+"\t",line[0][9]+"\t",line[0][10]+"\t",line[0][12])
+    print("-"*50)
+    main()
+    
 def main():
-    mm=["1-Data Entry Menu","2-Process Menu","3-Reports Menu"]
+    mm=["1-Data Entry Menu","2-Process Menu","3-Reports Menu","0-Exit"]
     for i in mm:
         print(i)
     p=input("\nProcess No: ")
     print("-"*50)
     if p=="1":
         dataEntryMenu()
+    elif p=="0":
+        exit()
 __name__==main()
